@@ -1,3 +1,140 @@
+import copy
+
+X = "X"
+O = "O"
+EMPTY = None
+
+def initial_state():
+    """
+    Returns starting state of the board.
+    """
+    return [[EMPTY, EMPTY, EMPTY],
+            [EMPTY, EMPTY, EMPTY],
+            [EMPTY, EMPTY, EMPTY]]
+
+
+def player(board): # passes tests
+    """
+    Returns player who has the next turn on a board.
+    """
+    has_empty = any(EMPTY in sublist for sublist in board)
+    if not has_empty:
+        return X
+    
+    x_count = sum(row.count(X) for row in board)
+    o_count = sum(row.count(O) for row in board)
+
+    if (x_count > o_count):
+        return O
+    else:
+        return X
+    
+    raise NotImplementedError
+
+
+def actions(board): # passes tests
+    """
+    Returns set of all possible actions (i, j) available on the board.
+    """
+    actions_set = set()
+    if board[0][0] is None:
+        actions_set.add((0, 0))
+    if board[0][1] is None:
+        actions_set.add((0, 1))
+    if board[0][2] is None:
+        actions_set.add((0, 2))
+    if board[1][0] is None:
+        actions_set.add((1, 0))
+    if board[1][1] is None:
+        actions_set.add((1, 1))
+    if board[1][2] is None:
+        actions_set.add((1, 2))
+    if board[2][0] is None:
+        actions_set.add((2, 0))
+    if board[2][1] is None:
+        actions_set.add((2, 1))
+    if board[2][2] is None:
+        actions_set.add((2, 2))
+
+    return actions_set
+    raise NotImplementedError
+
+
+def result(board, action): # passes tests
+    """
+    Returns the board that results from making move (i, j) on the board.
+    """
+    new_board = copy.deepcopy(board)
+    if new_board[action[0]][action[1]] is not None:
+        raise ValueError("Invalid action: Cell already occupied.")
+    
+    if action[0] < 0 or action[0] > 2 or action[1] < 0 or action[1] > 2:
+        raise ValueError("Invalid action: Indices out of bounds.")
+    
+    new_board[action[0]][action[1]] = player(board)
+    return new_board
+    raise NotImplementedError
+
+
+def winner(board): # passes tests
+    """
+    Returns the winner of the game, if there is one.
+    """
+    diagnal1 = [board[i][i] for i in range(3)]
+    diagnal2 = [board[i][2 - i] for i in range(3)]
+    if all(cell == X for cell in diagnal1) or all(cell == X for cell in diagnal2):
+        return X
+    if all(cell == O for cell in diagnal1) or all(cell == O for cell in diagnal2):
+        return O
+    
+    for row in board:
+        if all(cell == X for cell in row):
+            return X
+        if all(cell == O for cell in row):
+            return O
+        
+    for col in range(3):
+        if all(board[row][col] == X for row in range(3)):
+            return X
+        if all(board[row][col] == O for row in range(3)):
+            return O
+    return None  # No winner yet
+    raise NotImplementedError
+
+
+def terminal(board): # passes tests
+    """
+    Returns True if game is over, False otherwise.
+    """
+    result_winner = winner(board)
+    if result_winner is not None:
+        return True # Game is over with a winner
+    
+    has_empty = any(EMPTY in sublist for sublist in board)
+    if not has_empty:
+        return True # Game is over with a draw (no empty cells)
+    
+    return False  # Game is still ongoing
+    raise NotImplementedError
+
+
+def utility(board): # passes tests
+    """
+    Returns 1 if X has won the game, -1 if O has won, 0 otherwise.
+    """
+    result_winner = winner(board)
+    if result_winner == X:
+        return 1
+    elif result_winner == O:
+        return -1
+    else:
+        return 0
+    raise NotImplementedError
+
+
+
+
+
 # Python3 program to find the next optimal move for a player 
 player, opponent = 'x', 'o' 
 
