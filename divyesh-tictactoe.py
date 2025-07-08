@@ -192,7 +192,7 @@ def evaluate(b) :
 # This is the minimax function. It considers all 
 # the possible ways the game can go and returns 
 # the value of the board 
-def minimax(board, depth, isMax) : 
+def minimax_core(board, depth, isMax) : 
     score = evaluate(board)
 
     # If Maximizer has won the game return his/her 
@@ -226,7 +226,7 @@ def minimax(board, depth, isMax) :
 
                     # Call minimax recursively and choose 
                     # the maximum value 
-                    best = max( best, minimax(board,
+                    best = max( best, minimax_core(board,
                                               depth + 1,
                                               not isMax) )
 
@@ -250,14 +250,14 @@ def minimax(board, depth, isMax) :
 
                     # Call minimax recursively and choose 
                     # the minimum value 
-                    best = min(best, minimax(board, depth + 1, not isMax))
+                    best = min(best, minimax_core(board, depth + 1, not isMax))
 
                     # Undo the move 
                     board[i][j] = '_'
         return best
 
 # This will return the best possible move for the player 
-def findBestMove(board) : 
+def minimax(board) : 
     bestVal = -1000 
     bestMove = (-1, -1) 
 
@@ -275,7 +275,7 @@ def findBestMove(board) :
 
                 # compute evaluation function for this 
                 # move. 
-                moveVal = minimax(board, 0, False) 
+                moveVal = minimax_core(board, 0, False) 
 
                 # Undo the move 
                 board[i][j] = '_' 
@@ -290,6 +290,7 @@ def findBestMove(board) :
     print("The value of the best Move is :", bestVal)
     print()
     return bestMove
+
 # Driver code
 board = [
     [ 'x', 'o', 'x' ], 
@@ -297,7 +298,7 @@ board = [
     [ '_', '_', '_' ] 
 ]
 
-bestMove = findBestMove(board) 
+bestMove = minimax(board)
 
 print("The Optimal Move is :") 
 print("ROW:", bestMove[0], " COL:", bestMove[1])
