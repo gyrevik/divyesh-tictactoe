@@ -137,24 +137,24 @@ def utility(board): # passes tests
 
 # Python3 program to find the next optimal move for a player
    
-# This is the minimax function. It considers all 
+# This is the minimax_core function. It considers all 
 # the possible ways the game can go and returns the value of the board 
 def minimax_core(board, depth, isMax): 
     the_winner = winner(board)
-    score = -1
+    score = None
     if the_winner is X:
-        score = 10
+        score = 1
     elif the_winner is O:
-        score = -10
+        score = -1
     else:
         score = 0
 
     # If Maximizer has won the game return his/her evaluated score 
-    if (score == 10) : 
+    if (score == 1) : 
         return score
 
     # If Minimizer has won the game return his/her evaluated score 
-    if (score == -10) :
+    if (score == -1) :
         return score
 
     # If there are no more moves and no winner then it is a tie 
@@ -174,7 +174,7 @@ def minimax_core(board, depth, isMax):
                     board[i][j] = X 
 
                     # Call minimax recursively and choose the maximum value 
-                    best = max( best, minimax_core(board, depth + 1, not isMax) )
+                    best = max(best, minimax_core(board, depth + 1, not isMax) )
 
                     # Undo the move 
                     board[i][j] = EMPTY
