@@ -135,12 +135,10 @@ def utility(board): # passes tests
 #############################################################
 
 
-# Python3 program to find the next optimal move for a player 
-#player, opponent = 'x', 'o' 
+# Python3 program to find the next optimal move for a player
 
 # This function returns true if there are moves 
-# remaining on the board. It returns false if 
-# there are no moves left to play. 
+# remaining on the board. It returns false if there are no moves left to play. 
 def isMovesLeft(board) : 
     for i in range(3) :
         for j in range(3) :
@@ -148,8 +146,7 @@ def isMovesLeft(board) :
                 return True 
     return False
 
-# This is the evaluation function as discussed 
-# in the previous article ( http://goo.gl/sJgv68 ) 
+# This is the evaluation function as discussed in the previous article ( http://goo.gl/sJgv68 ) 
 def evaluate(b) : 
     # Checking for Rows for X or O victory. 
     for row in range(3) :     
@@ -189,18 +186,15 @@ def evaluate(b) :
 def minimax_core(board, depth, isMax) : 
     score = evaluate(board)
 
-    # If Maximizer has won the game return his/her 
-    # evaluated score 
+    # If Maximizer has won the game return his/her evaluated score 
     if (score == 10) : 
         return score
 
-    # If Minimizer has won the game return his/her 
-    # evaluated score 
+    # If Minimizer has won the game return his/her evaluated score 
     if (score == -10) :
         return score
 
-    # If there are no more moves and no winner then 
-    # it is a tie 
+    # If there are no more moves and no winner then it is a tie 
     if (isMovesLeft(board) == False) :
         return 0
 
@@ -213,12 +207,10 @@ def minimax_core(board, depth, isMax) :
             for j in range(3) :
                 # Check if cell is empty 
                 if (board[i][j]== EMPTY) :
-                
                     # Make the move 
                     board[i][j] = X 
 
-                    # Call minimax recursively and choose 
-                    # the maximum value 
+                    # Call minimax recursively and choose the maximum value 
                     best = max( best, minimax_core(board, depth + 1, not isMax) )
 
                     # Undo the move 
@@ -237,8 +229,7 @@ def minimax_core(board, depth, isMax) :
                     # Make the move 
                     board[i][j] = O 
 
-                    # Call minimax recursively and choose 
-                    # the minimum value 
+                    # Call minimax recursively and choose the minimum value 
                     best = min(best, minimax_core(board, depth + 1, not isMax))
 
                     # Undo the move 
@@ -251,8 +242,7 @@ def minimax(board) :
     bestMove = (-1, -1) 
 
     # Traverse all cells, evaluate minimax function for 
-    # all empty cells. And return the cell with optimal 
-    # value. 
+    # all empty cells. And return the cell with optimal value. 
     for i in range(3) :     
         for j in range(3) :
             # Check if cell is empty 
@@ -260,16 +250,14 @@ def minimax(board) :
                 # Make the move 
                 board[i][j] = X
 
-                # compute evaluation function for this 
-                # move. 
+                # compute evaluation function for this move. 
                 moveVal = minimax_core(board, 0, False) 
 
                 # Undo the move 
                 board[i][j] = EMPTY
 
                 # If the value of the current move is 
-                # more than the best value, then update 
-                # best/ 
+                # more than the best value, then update best
                 if (moveVal > bestVal) :                
                     bestMove = (i, j)
                     bestVal = moveVal
