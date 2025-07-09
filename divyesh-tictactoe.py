@@ -131,11 +131,6 @@ def utility(board): # passes tests
         return 0
     raise NotImplementedError
 
-
-#############################################################
-
-
-# Python3 program to find the next optimal move for a player
    
 # This is the minimax_core function. It considers all 
 # the possible ways the game can go and returns the value of the board 
