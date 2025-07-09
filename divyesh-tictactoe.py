@@ -136,46 +136,18 @@ def utility(board): # passes tests
 
 
 # Python3 program to find the next optimal move for a player
-
-# This is the evaluation function as discussed in the previous article ( http://goo.gl/sJgv68 ) 
-def evaluate(b) : 
-    # Checking for Rows for X or O victory. 
-    for row in range(3) :     
-        if (b[row][0] == b[row][1] and b[row][1] == b[row][2]) :        
-            if (b[row][0] == X) :
-                return 10
-            elif (b[row][0] == O) :
-                return -10
-
-    # Checking for Columns for X or O victory. 
-    for col in range(3) :
-        if (b[0][col] == b[1][col] and b[1][col] == b[2][col]) :
-            if (b[0][col] == X): 
-                return 10
-            elif (b[0][col] == O):
-                return -10
-
-    # Checking for Diagonals for X or O victory. 
-    if (b[0][0] == b[1][1] and b[1][1] == b[2][2]):
-        if (b[0][0] == X) :
-            return 10
-        elif (b[0][0] == O) :
-            return -10
-
-    if (b[0][2] == b[1][1] and b[1][1] == b[2][0]):
-        if (b[0][2] == X) :
-            return 10
-        elif (b[0][2] == O) :
-            return -10
-
-    # Else if none of them have won then return 0 
-    return 0
-
+   
 # This is the minimax function. It considers all 
-# the possible ways the game can go and returns 
-# the value of the board 
-def minimax_core(board, depth, isMax) : 
-    score = evaluate(board)
+# the possible ways the game can go and returns the value of the board 
+def minimax_core(board, depth, isMax): 
+    the_winner = winner(board)
+    score = -1
+    if the_winner is X:
+        score = 10
+    elif the_winner is O:
+        score = -10
+    else:
+        score = 0
 
     # If Maximizer has won the game return his/her evaluated score 
     if (score == 10) : 
