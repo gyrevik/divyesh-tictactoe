@@ -166,18 +166,12 @@ def minimax_core(board, depth, isMax):
         best = -1000 
 
         # Traverse all cells 
-        for i in range(3) :         
-            for j in range(3) :
-                # Check if cell is empty 
-                if (board[i][j]== EMPTY) :
-                    # Make the move 
-                    board[i][j] = X 
+        for action in actions(board):         
+            # Make the move 
+            new_board = result(board, action) 
+            # Call minimax recursively and choose the maximum value 
+            best = max(best, minimax_core(new_board, depth + 1, not isMax))
 
-                    # Call minimax recursively and choose the maximum value 
-                    best = max(best, minimax_core(board, depth + 1, not isMax) )
-
-                    # Undo the move 
-                    board[i][j] = EMPTY
         return best
 
     # If this minimizer's move 
