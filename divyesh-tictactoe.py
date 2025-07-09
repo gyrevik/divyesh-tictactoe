@@ -132,58 +132,52 @@ def utility(board): # passes tests
     raise NotImplementedError
 
 
-
+#############################################################
 
 
 # Python3 program to find the next optimal move for a player 
-player, opponent = 'x', 'o' 
+#player, opponent = 'x', 'o' 
 
 # This function returns true if there are moves 
 # remaining on the board. It returns false if 
 # there are no moves left to play. 
 def isMovesLeft(board) : 
-
     for i in range(3) :
         for j in range(3) :
-            if (board[i][j] == '_') :
+            if (board[i][j] == EMPTY) :
                 return True 
     return False
 
 # This is the evaluation function as discussed 
 # in the previous article ( http://goo.gl/sJgv68 ) 
 def evaluate(b) : 
-  
     # Checking for Rows for X or O victory. 
     for row in range(3) :     
         if (b[row][0] == b[row][1] and b[row][1] == b[row][2]) :        
-            if (b[row][0] == player) :
+            if (b[row][0] == X) :
                 return 10
-            elif (b[row][0] == opponent) :
+            elif (b[row][0] == O) :
                 return -10
 
     # Checking for Columns for X or O victory. 
     for col in range(3) :
-     
         if (b[0][col] == b[1][col] and b[1][col] == b[2][col]) :
-        
-            if (b[0][col] == player) : 
+            if (b[0][col] == X): 
                 return 10
-            elif (b[0][col] == opponent) :
+            elif (b[0][col] == O):
                 return -10
 
     # Checking for Diagonals for X or O victory. 
-    if (b[0][0] == b[1][1] and b[1][1] == b[2][2]) :
-    
-        if (b[0][0] == player) :
+    if (b[0][0] == b[1][1] and b[1][1] == b[2][2]):
+        if (b[0][0] == X) :
             return 10
-        elif (b[0][0] == opponent) :
+        elif (b[0][0] == O) :
             return -10
 
-    if (b[0][2] == b[1][1] and b[1][1] == b[2][0]) :
-    
-        if (b[0][2] == player) :
+    if (b[0][2] == b[1][1] and b[1][1] == b[2][0]):
+        if (b[0][2] == X) :
             return 10
-        elif (b[0][2] == opponent) :
+        elif (b[0][2] == O) :
             return -10
 
     # Else if none of them have won then return 0 
@@ -217,21 +211,18 @@ def minimax_core(board, depth, isMax) :
         # Traverse all cells 
         for i in range(3) :         
             for j in range(3) :
-             
                 # Check if cell is empty 
-                if (board[i][j]=='_') :
+                if (board[i][j]== EMPTY) :
                 
                     # Make the move 
-                    board[i][j] = player 
+                    board[i][j] = X 
 
                     # Call minimax recursively and choose 
                     # the maximum value 
-                    best = max( best, minimax_core(board,
-                                              depth + 1,
-                                              not isMax) )
+                    best = max( best, minimax_core(board, depth + 1, not isMax) )
 
                     # Undo the move 
-                    board[i][j] = '_'
+                    board[i][j] = EMPTY
         return best
 
     # If this minimizer's move 
@@ -241,19 +232,17 @@ def minimax_core(board, depth, isMax) :
         # Traverse all cells 
         for i in range(3) :         
             for j in range(3) :
-             
                 # Check if cell is empty 
-                if (board[i][j] == '_') :
-                
+                if (board[i][j] == EMPTY) :
                     # Make the move 
-                    board[i][j] = opponent 
+                    board[i][j] = O 
 
                     # Call minimax recursively and choose 
                     # the minimum value 
                     best = min(best, minimax_core(board, depth + 1, not isMax))
 
                     # Undo the move 
-                    board[i][j] = '_'
+                    board[i][j] = EMPTY
         return best
 
 # This will return the best possible move for the player 
@@ -266,19 +255,17 @@ def minimax(board) :
     # value. 
     for i in range(3) :     
         for j in range(3) :
-        
             # Check if cell is empty 
-            if (board[i][j] == '_') : 
-            
+            if (board[i][j] == EMPTY) : 
                 # Make the move 
-                board[i][j] = player
+                board[i][j] = X
 
                 # compute evaluation function for this 
                 # move. 
                 moveVal = minimax_core(board, 0, False) 
 
                 # Undo the move 
-                board[i][j] = '_' 
+                board[i][j] = EMPTY
 
                 # If the value of the current move is 
                 # more than the best value, then update 
@@ -293,9 +280,9 @@ def minimax(board) :
 
 # Driver code
 board = [
-    [ 'x', 'o', 'x' ], 
-    [ 'o', 'o', 'x' ], 
-    [ '_', '_', '_' ] 
+    [ X, O, X ], 
+    [ O, O, X ], 
+    [ EMPTY, EMPTY, EMPTY ] 
 ]
 
 bestMove = minimax(board)
