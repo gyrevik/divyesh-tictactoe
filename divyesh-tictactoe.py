@@ -137,15 +137,6 @@ def utility(board): # passes tests
 
 # Python3 program to find the next optimal move for a player
 
-# This function returns true if there are moves 
-# remaining on the board. It returns false if there are no moves left to play. 
-def isMovesLeft(board) : 
-    for i in range(3) :
-        for j in range(3) :
-            if (board[i][j] == EMPTY) :
-                return True 
-    return False
-
 # This is the evaluation function as discussed in the previous article ( http://goo.gl/sJgv68 ) 
 def evaluate(b) : 
     # Checking for Rows for X or O victory. 
@@ -195,7 +186,7 @@ def minimax_core(board, depth, isMax) :
         return score
 
     # If there are no more moves and no winner then it is a tie 
-    if (isMovesLeft(board) == False) :
+    if (terminal(board) == True) :
         return 0
 
     # If this maximizer's move 
